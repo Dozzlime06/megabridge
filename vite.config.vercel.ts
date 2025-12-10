@@ -13,7 +13,6 @@ export default defineConfig({
       "@": path.resolve(process.cwd(), "client", "src"),
       "@shared": path.resolve(process.cwd(), "shared"),
       "@assets": path.resolve(process.cwd(), "attached_assets"),
-      "@solana-program/system": path.resolve(process.cwd(), "node_modules/@solana-program/system"),
     },
   },
   root: path.resolve(process.cwd(), "client"),
@@ -21,6 +20,12 @@ export default defineConfig({
     outDir: path.resolve(process.cwd(), "dist/public"),
     emptyOutDir: true,
     rollupOptions: {
+      external: [
+        '@solana/kit',
+        '@solana-program/memo',
+        '@solana-program/system',
+        '@solana-program/token',
+      ],
       onwarn(warning, warn) {
         if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
         warn(warning);
@@ -28,6 +33,11 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['@solana-program/system'],
+    exclude: [
+      '@solana/kit',
+      '@solana-program/memo',
+      '@solana-program/system',
+      '@solana-program/token',
+    ],
   },
 });
